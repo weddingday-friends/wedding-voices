@@ -45,10 +45,17 @@ h1 em{font-style:italic;font-weight:400;display:block}
 
 /* ── общий трек ──────────────────────────────────────────── */
 .hero{margin:36px 0 0;padding:22px;background:var(--paper-2)}
-.hero .label{font-size:9.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-.hero .h-title{font-family:var(--serif);font-size:clamp(24px,7vw,32px);font-weight:700;line-height:1.1;margin-bottom:4px}
-.hero .h-artist{font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.hero .h-note{font-size:13.5px;line-height:1.6;color:var(--muted);margin:14px 0 0}
+.hero .label{font-size:9.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.hero-row{display:flex;gap:18px;align-items:flex-start}
+.h-cover{flex:0 0 92px;width:92px;aspect-ratio:1/1;position:relative;overflow:hidden;background:rgba(107,0,38,.07)}
+@media (min-width:460px){.h-cover{flex-basis:130px;width:130px}}
+.h-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.h-cover .ph{position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--serif);font-size:30px;font-weight:900;color:var(--accent);opacity:.22}
+.hero-main{flex:1;min-width:0}
+.hero .h-album{font-size:9.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.hero .h-title{font-family:var(--serif);font-size:clamp(20px,5.6vw,27px);font-weight:700;line-height:1.15;margin-bottom:14px}
+.hero .h-note{font-size:13.5px;line-height:1.6;color:var(--muted);margin:18px 0 0}
 
 /* ── плеер ───────────────────────────────────────────────── */
 .player{display:flex;align-items:center;gap:14px;padding:16px 0;border-top:1px solid var(--accent-soft)}
@@ -198,78 +205,166 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--accent-soft);
      ══════════════════════════════════════════════════════════════ */
 
   var MAIN_TRACK = {
-    title:  'Название общего трека',
-    artist: 'Исполнитель',
-    file:   'tracks/main.mp3',
-    note:   'Тот самый трек, который у нас общий. Пара слов, почему именно он.'
+    "album": "под алтарем",
+    "title": "Noize MC, Адик 22ВО7, Чупак - Давай приколемся",
+    "cover": "covers/main.jpg",
+    "file": "tracks/main.mp3",
+    "note": "о вас книжку написали, так и фильм создадим…"
   };
 
   var ALBUMS = [
     {
-      id: 'album-1',
-      title:  'Название альбома',
-      author: 'Имя друга',
-      cover:  'covers/1.jpg',
-      note:   'Пара слов от автора: про что этот альбом и когда его слушать.',
-      tracks: [
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/1-1.mp3', note: 'Ассоциация или строчка воспоминания.' },
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/1-2.mp3', note: '' },
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/1-3.mp3', note: '' }
+      "id": "album-1",
+      "title": "от нюши",
+      "author": "10 треков",
+      "cover": "covers/1.jpg",
+      "note": "во времени накопила, многоранно !",
+      "tracks": [
+        {
+          "title": "Joan Osborne - One Of Us",
+          "file": "tracks/1-1.mp3",
+          "note": ""
+        },
+        {
+          "title": "Мураками - До дрожи",
+          "file": "tracks/1-2.mp3",
+          "note": ""
+        },
+        {
+          "title": "IOka - Эй, мой лучик (Автор: Пристань Загулявшего 17)",
+          "file": "tracks/1-3.mp3",
+          "note": ""
+        },
+        {
+          "title": "Young Lean - Ginseng Strip 2002",
+          "file": "tracks/1-4.mp3",
+          "note": ""
+        },
+        {
+          "title": "FEDUK - Будапешт",
+          "file": "tracks/1-5.mp3",
+          "note": ""
+        },
+        {
+          "title": "Big Baby Tape, kizaru - Bandana",
+          "file": "tracks/1-6.mp3",
+          "note": ""
+        },
+        {
+          "title": "SALUKI, 104 feat. ANIKV, БИЛИК - ЛАВЭ",
+          "file": "tracks/1-7.mp3",
+          "note": ""
+        },
+        {
+          "title": "PHARAOH - Мой кайф",
+          "file": "tracks/1-8.mp3",
+          "note": ""
+        },
+        {
+          "title": "MNOGOZNAAL - DOF",
+          "file": "tracks/1-9.mp3",
+          "note": ""
+        },
+        {
+          "title": "Челенджер - Не забывай своих друзей",
+          "file": "tracks/1-10.mp3",
+          "note": ""
+        }
       ]
     },
     {
-      id: 'album-2',
-      title:  'Название альбома',
-      author: 'Имя друга',
-      cover:  'covers/2.jpg',
-      note:   'Пара слов от автора.',
-      tracks: [
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/2-1.mp3', note: '' },
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/2-2.mp3', note: '' }
+      "id": "album-2",
+      "title": "от псикс кирюши",
+      "author": "3 трека",
+      "cover": "covers/2.jpg",
+      "note": "ну вот такие дела",
+      "tracks": [
+        {
+          "title": "Noize MC - Вселенная Бесконечна",
+          "file": "tracks/2-1.mp3",
+          "note": ""
+        },
+        {
+          "title": "Big Baby Tape, kizaru - Ride Or Die",
+          "file": "tracks/2-2.mp3",
+          "note": ""
+        },
+        {
+          "title": "алёна швец. - Солнце вышло покурить",
+          "file": "tracks/2-3.mp3",
+          "note": ""
+        }
       ]
     },
     {
-      id: 'album-3',
-      title:  'Название альбома',
-      author: 'Имя друга',
-      cover:  'covers/3.jpg',
-      note:   'Пара слов от автора.',
-      tracks: [
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/3-1.mp3', note: '' },
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/3-2.mp3', note: '' }
+      "id": "album-3",
+      "title": "от турбошиншилы",
+      "author": "3 трека",
+      "cover": "covers/3.jpg",
+      "note": "не придумал",
+      "tracks": [
+        {
+          "title": "Баста, Гуф - Самурай",
+          "file": "tracks/3-1.mp3",
+          "note": ""
+        },
+        {
+          "title": "PHARAOH - Не По-Христиански (Bonus)",
+          "file": "tracks/3-2.mp3",
+          "note": ""
+        },
+        {
+          "title": "XXXTENTACION - I don't let go",
+          "file": "tracks/3-3.mp3",
+          "note": ""
+        }
       ]
     },
     {
-      id: 'album-4',
-      title:  'Название альбома',
-      author: 'Имя друга',
-      cover:  'covers/4.jpg',
-      note:   'Пара слов от автора.',
-      tracks: [
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/4-1.mp3', note: '' },
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/4-2.mp3', note: '' }
+      "id": "album-4",
+      "title": "от сани санечки санечка",
+      "author": "2 трека",
+      "cover": "covers/4.jpg",
+      "note": "ребята, живите так, как говорит макс корж!",
+      "tracks": [
+        {
+          "title": "Комбинация - American boy",
+          "file": "tracks/4-1.mp3",
+          "note": ""
+        },
+        {
+          "title": "Комбинация - Russian girl",
+          "file": "tracks/4-2.mp3",
+          "note": ""
+        }
       ]
     },
     {
-      id: 'album-5',
-      title:  'Название альбома',
-      author: 'Имя друга',
-      cover:  'covers/5.jpg',
-      note:   'Пара слов от автора.',
-      tracks: [
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/5-1.mp3', note: '' },
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/5-2.mp3', note: '' }
+      "id": "album-5",
+      "title": "от кариши",
+      "author": "1 трек",
+      "cover": "covers/5.jpg",
+      "note": "нежной паре-нежная песня",
+      "tracks": [
+        {
+          "title": "5'nizza - Нева",
+          "file": "tracks/5-1.mp3",
+          "note": ""
+        }
       ]
     },
     {
-      id: 'album-6',
-      title:  'Название альбома',
-      author: 'Имя друга',
-      cover:  'covers/6.jpg',
-      note:   'Пара слов от автора.',
-      tracks: [
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/6-1.mp3', note: '' },
-        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/6-2.mp3', note: '' }
+      "id": "album-6",
+      "title": "от лизы",
+      "author": "1 трек",
+      "cover": "covers/6.jpg",
+      "note": "Трек из нашего общего прошлого для вашего счастливого будущего",
+      "tracks": [
+        {
+          "title": "Jastin Biber - Baby",
+          "file": "tracks/6-1.mp3",
+          "note": ""
+        }
       ]
     }
   ];
@@ -390,7 +485,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--accent-soft);
     box.className = cls;
     var ph = document.createElement('div');
     ph.className = 'ph';
-    ph.textContent = two(num);
+    ph.textContent = (num === null || num === 0) ? '' : two(num);
     box.appendChild(ph);
     if (src) {
       var img = new Image();
@@ -406,11 +501,19 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--accent-soft);
   var hero = $('#hero');
   hero.innerHTML =
     '<div class="label">Главный трек</div>' +
-    '<div class="h-title"></div><div class="h-artist"></div>' +
-    '<ul style="margin:0;padding:0;list-style:none"></ul>' +
+    '<div class="hero-row">' +
+      '<div class="hero-cover-slot"></div>' +
+      '<div class="hero-main">' +
+        (MAIN_TRACK.album ? '<div class="h-album"></div>' : '') +
+        '<div class="h-title"></div>' +
+        '<ul style="margin:0;padding:0;list-style:none"></ul>' +
+      '</div>' +
+    '</div>' +
     (MAIN_TRACK.note ? '<p class="h-note"></p>' : '');
+
+  $('.hero-cover-slot', hero).replaceWith(cover(MAIN_TRACK.cover, null, 'h-cover'));
+  if (MAIN_TRACK.album) $('.h-album', hero).textContent = MAIN_TRACK.album;
   $('.h-title', hero).textContent = MAIN_TRACK.title;
-  $('.h-artist', hero).textContent = MAIN_TRACK.artist;
   if (MAIN_TRACK.note) $('.h-note', hero).textContent = MAIN_TRACK.note;
   $('ul', hero).appendChild(makePlayer({ title: MAIN_TRACK.title, file: MAIN_TRACK.file }, null));
   $('.t-title', hero).style.display = 'none';   // название уже стоит крупно выше
