@@ -1,37 +1,311 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Слова родителей невесты</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #faf7f2; color: #4a4a4a; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 400px; width: 100%; text-align: center; }
-        h1 { font-size: 22px; color: #2c3e50; margin-bottom: 5px; font-weight: 600;}
-        p { font-size: 15px; color: #7f8c8d; margin-bottom: 25px; font-style: italic; }
-        .track { margin-bottom: 20px; text-align: left; }
-        .title { font-size: 14px; font-weight: bold; margin-bottom: 8px; color: #d35400; }
-        audio { width: 100%; outline: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F7F3EA">
+<meta name="robots" content="noindex, nofollow">
+<title>Родители невесты · ЛЮБОВЬ №1</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ──────────────────────────────────────────────────────────────
+   ЛЮБОВЬ №1 — страница голосовых. Палитра и шрифты как в журнале.
+   Меняется только блок :root — остальное общее для обеих страниц.
+   ────────────────────────────────────────────────────────────── */
+:root{
+  --paper:#F7F3EA;
+  --paper-2:#F0EADD;
+  --ink:#221F1D;
+  --muted:#6E6862;
+  --accent:#17306B;          /* индиго — страница невесты */
+  --accent-soft:rgba(23,48,107,.16);
+  --serif:"Playfair Display",Georgia,serif;
+  --sans:"Inter",-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  min-height:100svh;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.wrap{max-width:560px;margin:0 auto;padding:34px 22px 56px}
+
+/* ── шапка ─────────────────────────────────────────────── */
+.kicker{
+  font-size:10px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 30px
+}
+h1{
+  font-family:var(--serif);font-weight:900;color:var(--accent);
+  font-size:clamp(38px,11.5vw,58px);line-height:.98;letter-spacing:-.02em;
+  margin:0 0 18px
+}
+h1 em{font-style:italic;font-weight:400;display:block}
+.rule{height:1px;background:var(--accent-soft);margin:0 0 18px}
+.lede{font-size:15px;line-height:1.62;color:var(--ink);margin:0 0 8px}
+.lede + .lede{margin-top:14px}
+
+/* ── плеер ─────────────────────────────────────────────── */
+.tracks{margin:38px 0 0;padding:0;list-style:none}
+.player{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 0;border-top:1px solid var(--accent-soft)
+}
+.tracks .player:last-child{border-bottom:1px solid var(--accent-soft)}
+.num{
+  font-family:var(--serif);font-size:26px;font-weight:700;line-height:1;
+  color:var(--accent);opacity:.45;min-width:34px
+}
+.info{flex:1;min-width:0}
+.title{font-family:var(--serif);font-size:19px;font-weight:700;line-height:1.2;margin-bottom:9px}
+.bar{
+  position:relative;height:3px;border-radius:2px;background:var(--paper-2);
+  cursor:pointer;overflow:hidden
+}
+.bar::after{content:"";position:absolute;inset:-12px 0;}   /* зона нажатия крупнее полоски */
+.fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width .1s linear}
+.meta{
+  margin-top:8px;font-size:10px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted)
+}
+.play{
+  flex:0 0 auto;width:48px;height:48px;border-radius:50%;
+  border:1px solid var(--accent);background:transparent;color:var(--accent);
+  display:grid;place-items:center;cursor:pointer;padding:0;
+  transition:background .18s ease,color .18s ease;-webkit-tap-highlight-color:transparent
+}
+.play:hover,.play:focus-visible{background:var(--accent);color:var(--paper)}
+.play svg{width:16px;height:16px;fill:currentColor;pointer-events:none}
+.play .ico-pause{display:none}
+.playing .play .ico-play{display:none}
+.playing .play .ico-pause{display:block}
+.playing .play{background:var(--accent);color:var(--paper)}
+.missing{opacity:.5}
+.missing .play{pointer-events:none}
+
+/* ── подвал ────────────────────────────────────────────── */
+footer{
+  margin-top:44px;padding-top:16px;border-top:1px solid var(--accent-soft);
+  font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  line-height:1.9
+}
+
+/* ── замок ─────────────────────────────────────────────── */
+#gate{
+  position:fixed;inset:0;background:var(--paper);z-index:10;
+  display:grid;place-items:center;padding:24px;
+  transition:opacity .45s ease,visibility .45s ease
+}
+#gate.hidden{opacity:0;visibility:hidden}
+.gate-inner{width:100%;max-width:340px;text-align:center}
+.wordmark{
+  font-family:var(--serif);font-weight:900;color:var(--accent);
+  font-size:clamp(44px,15vw,64px);letter-spacing:-.03em;line-height:1;margin-bottom:22px
+}
+.gate-hint{font-size:13.5px;line-height:1.6;color:var(--muted);margin:0 0 22px}
+#gate-form{display:flex;flex-direction:column;gap:10px}
+#code{
+  font-family:var(--sans);font-size:17px;letter-spacing:.28em;text-align:center;
+  padding:14px 12px;border:1px solid var(--accent-soft);border-radius:0;
+  background:transparent;color:var(--ink);width:100%
+}
+#code:focus{outline:none;border-color:var(--accent)}
+#code::placeholder{letter-spacing:.2em;color:#B9B1A6}
+#gate-form button{
+  font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;padding:15px;border:none;border-radius:0;
+  background:var(--accent);color:var(--paper);cursor:pointer;
+  -webkit-tap-highlight-color:transparent
+}
+.err{min-height:18px;margin:12px 0 0;font-size:12px;color:var(--accent)}
+.shake{animation:shake .32s}
+@keyframes shake{
+  0%,100%{transform:translateX(0)} 20%{transform:translateX(-7px)}
+  40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(3px)}
+}
+
+#app{opacity:0;transition:opacity .5s ease .1s}
+#app.shown{opacity:1}
+@media (prefers-reduced-motion:reduce){
+  #gate,#app,.fill,.play{transition:none} .shake{animation:none}
+}
+</style>
 </head>
+
 <body>
-    <div class="card">
-        <h1>Родители Невесты ❤️</h1>
-        <p>Самые дорогие слова</p>
 
-        <div class="track">
-            <div class="title">Голос Мамы</div>
-            <audio controls preload="metadata">
-                <source src="mama-nevesty.mp3" type="audio/mpeg">
-            </audio>
-        </div>
+<!-- Ключик, а не защита: код лежит в открытом виде, и это нормально.
+     Он просто не даёт открыть страницу случайному человеку с телефона. -->
+<div id="gate">
+  <div class="gate-inner">
+    <div class="wordmark">ЛЮБОВЬ</div>
+    <p class="gate-hint">Эта страница — часть журнала.<br>Введите дату свадьбы, чтобы открыть.</p>
+    <form id="gate-form" novalidate>
+      <input id="code" type="text" inputmode="numeric" autocomplete="off"
+             maxlength="8" placeholder="ДДММГГГГ" aria-label="Дата свадьбы">
+      <button type="submit">Открыть</button>
+    </form>
+    <p id="err" class="err" role="status" aria-live="polite"></p>
+  </div>
+</div>
 
-        <div class="track">
-            <div class="title">Голос Юры</div>
-            <audio controls preload="metadata">
-                <source src="papayr-nevesty.mp3" type="audio/mpeg">
-            </audio>
-        </div>
-    </div>
+<main id="app" class="wrap" aria-hidden="true">
+  <p class="kicker">Любовь · №1 · Аня и Даня</p>
+
+  <h1>Родители<em>невесты</em></h1>
+  <div class="rule"></div>
+
+  <p class="lede">Сначала обо всём догадались они, а уже потом вы сами. Дом, куда приезжают на все праздники подряд, и люди, которые ждут без предупреждения.</p>
+  <p class="lede">Здесь то, что они захотели сказать вам сами. Лучше в наушниках и не на бегу.</p>
+
+  <ul class="tracks">
+    <li class="player">
+      <div class="num">01</div>
+      <div class="info">
+        <div class="title">Голос мамы</div>
+        <div class="bar"><span class="fill"></span></div>
+        <div class="meta"><span class="time">— · —</span></div>
+      </div>
+      <button class="play" type="button" aria-label="Слушать голос мамы">
+        <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>
+        <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      </button>
+      <audio preload="metadata" src="mama-nevesty.mp3"></audio>
+    </li>
+
+    <li class="player">
+      <div class="num">02</div>
+      <div class="info">
+        <div class="title">Голос Юры</div>
+        <div class="bar"><span class="fill"></span></div>
+        <div class="meta"><span class="time">— · —</span></div>
+      </div>
+      <button class="play" type="button" aria-label="Слушать голос Юры">
+        <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>
+        <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      </button>
+      <audio preload="metadata" src="papayr-nevesty.mp3"></audio>
+    </li>
+  </ul>
+
+  <footer>
+    26 августа 2026<br>
+    Отпечатано в одном экземпляре · Нижний Новгород
+  </footer>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── замок ───────────────────────────────────────────── */
+  var PASS = '26082026';
+  var gate = document.getElementById('gate');
+  var app  = document.getElementById('app');
+  var form = document.getElementById('gate-form');
+  var code = document.getElementById('code');
+  var err  = document.getElementById('err');
+
+  function unlock() {
+    gate.classList.add('hidden');
+    app.classList.add('shown');
+    app.setAttribute('aria-hidden', 'false');
+    setTimeout(function () { gate.style.display = 'none'; }, 500);
+  }
+
+  try { if (localStorage.getItem('lubov-voices') === 'ok') unlock(); } catch (e) {}
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (code.value.replace(/\D/g, '') === PASS) {
+      try { localStorage.setItem('lubov-voices', 'ok'); } catch (e) {}
+      err.textContent = '';
+      unlock();
+    } else {
+      err.textContent = 'Не та дата. Попробуйте ещё раз.';
+      form.classList.remove('shake');
+      void form.offsetWidth;              // перезапуск анимации
+      form.classList.add('shake');
+      code.select();
+    }
+  });
+
+  /* ── плееры ──────────────────────────────────────────── */
+  function fmt(s) {
+    if (!isFinite(s) || s < 0) return '— · —';
+    var m = Math.floor(s / 60), x = Math.floor(s % 60);
+    return m + ':' + (x < 10 ? '0' + x : x);
+  }
+
+  var players = [].slice.call(document.querySelectorAll('.player'));
+
+  players.forEach(function (el) {
+    var audio = el.querySelector('audio');
+    var btn   = el.querySelector('.play');
+    var bar   = el.querySelector('.bar');
+    var fill  = el.querySelector('.fill');
+    var time  = el.querySelector('.time');
+
+    function paint() {
+      var d = audio.duration;
+      if (d && isFinite(d)) fill.style.width = (audio.currentTime / d * 100) + '%';
+    }
+
+    audio.addEventListener('loadedmetadata', function () {
+      el.classList.remove('missing');
+      time.textContent = fmt(audio.duration);
+    });
+    audio.addEventListener('timeupdate', function () {
+      paint();
+      time.textContent = fmt(audio.duration - audio.currentTime);
+    });
+    audio.addEventListener('ended', function () {
+      el.classList.remove('playing');
+      fill.style.width = '0%';
+      time.textContent = fmt(audio.duration);
+    });
+    audio.addEventListener('play', function () {
+      players.forEach(function (o) { if (o !== el) o.querySelector('audio').pause(); });
+      el.classList.add('playing');
+    });
+    audio.addEventListener('pause', function () { el.classList.remove('playing'); });
+    function markMissing() {
+      el.classList.add('missing');
+      el.classList.remove('playing');
+      time.textContent = 'файл ещё не загружен';
+    }
+    audio.addEventListener('error', markMissing);
+    // Файл мог отвалиться ещё до того, как отработал скрипт — проверяем сразу.
+    if (audio.error) markMissing();
+
+    btn.addEventListener('click', function () {
+      if (audio.paused) {
+        audio.play().catch(markMissing);
+      } else {
+        audio.pause();
+      }
+    });
+
+    bar.addEventListener('click', function (e) {
+      var d = audio.duration;
+      if (!d || !isFinite(d)) return;
+      var r = bar.getBoundingClientRect();
+      var k = (e.clientX - r.left) / r.width;
+      audio.currentTime = Math.max(0, Math.min(1, k)) * d;
+      paint();
+    });
+  });
+})();
+</script>
 </body>
 </html>
