@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F7F3EA">
+<meta name="robots" content="noindex, nofollow">
+<title>Альбомы от друзей · ЛЮБОВЬ №1</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════════
+   ЛЮБОВЬ №1 — альбомы от друзей.
+   Палитра, шрифты и замок — те же, что на страницах голосовых.
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --paper:#F7F3EA;
+  --paper-2:#EFE8DA;
+  --ink:#221F1D;
+  --muted:#6E6862;
+  --accent:#6B0026;
+  --accent-soft:rgba(107,0,38,.16);
+  --serif:"Playfair Display",Georgia,serif;
+  --sans:"Inter",-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;min-height:100svh;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+.wrap{max-width:620px;margin:0 auto;padding:34px 22px 56px}
+
+/* ── типографика ─────────────────────────────────────────── */
+.kicker{font-size:10px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin:0 0 28px}
+h1{font-family:var(--serif);font-weight:900;color:var(--accent);
+   font-size:clamp(38px,11.5vw,58px);line-height:.98;letter-spacing:-.02em;margin:0 0 18px}
+h1 em{font-style:italic;font-weight:400;display:block}
+.rule{height:1px;background:var(--accent-soft);margin:0 0 18px}
+.lede{font-size:15px;line-height:1.62;margin:0}
+
+/* ── общий трек ──────────────────────────────────────────── */
+.hero{margin:36px 0 0;padding:22px;background:var(--paper-2)}
+.hero .label{font-size:9.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.hero .h-title{font-family:var(--serif);font-size:clamp(24px,7vw,32px);font-weight:700;line-height:1.1;margin-bottom:4px}
+.hero .h-artist{font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.hero .h-note{font-size:13.5px;line-height:1.6;color:var(--muted);margin:14px 0 0}
+
+/* ── плеер ───────────────────────────────────────────────── */
+.player{display:flex;align-items:center;gap:14px;padding:16px 0;border-top:1px solid var(--accent-soft)}
+.hero .player{border-top:none;padding:0}
+.num{font-family:var(--serif);font-size:24px;font-weight:700;line-height:1;color:var(--accent);opacity:.42;min-width:30px}
+.info{flex:1;min-width:0}
+.t-title{font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.25}
+.t-note{font-size:12px;line-height:1.5;color:var(--muted);margin-top:3px}
+.bar{position:relative;height:3px;border-radius:2px;background:rgba(107,0,38,.12);cursor:pointer;overflow:hidden;margin-top:9px}
+.hero .bar{background:rgba(107,0,38,.18)}
+.fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width .1s linear}
+.meta{margin-top:7px;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.play{flex:0 0 auto;width:46px;height:46px;border-radius:50%;border:1px solid var(--accent);
+  background:transparent;color:var(--accent);display:grid;place-items:center;cursor:pointer;padding:0;
+  transition:background .18s ease,color .18s ease;-webkit-tap-highlight-color:transparent}
+.play:hover,.play:focus-visible{background:var(--accent);color:var(--paper)}
+.play svg{width:15px;height:15px;fill:currentColor;pointer-events:none}
+.play .ico-pause{display:none}
+.playing .play .ico-play{display:none}
+.playing .play .ico-pause{display:block}
+.playing .play{background:var(--accent);color:var(--paper)}
+.missing{opacity:.5}
+.missing .play{pointer-events:none}
+
+/* ── сетка альбомов ──────────────────────────────────────── */
+.section-head{margin:44px 0 18px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.section-head .kicker{margin:0}
+.section-head .count{font-family:var(--serif);font-size:15px;color:var(--accent);opacity:.5}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 16px}
+@media (min-width:520px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{border:none;background:transparent;padding:0;text-align:left;cursor:pointer;
+  font-family:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+.cover{position:relative;aspect-ratio:1/1;background:var(--paper-2);overflow:hidden;margin-bottom:10px}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.cover .ph{position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--serif);font-size:38px;font-weight:900;color:var(--accent);opacity:.22}
+.card .c-title{font-family:var(--serif);font-size:16px;font-weight:700;line-height:1.2}
+.card .c-author{font-size:9.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.card:hover .c-title,.card:focus-visible .c-title{color:var(--accent)}
+
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--accent-soft);
+  font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);line-height:1.9}
+
+/* ── экран альбома ───────────────────────────────────────── */
+.detail{position:fixed;inset:0;background:var(--paper);z-index:8;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease}
+.detail.open{opacity:1;visibility:visible}
+.back{display:inline-flex;align-items:center;gap:8px;border:none;background:transparent;padding:0;
+  font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);cursor:pointer;margin-bottom:28px;-webkit-tap-highlight-color:transparent}
+.d-cover{aspect-ratio:1/1;max-width:260px;background:var(--paper-2);position:relative;overflow:hidden;margin-bottom:22px}
+.d-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.d-cover .ph{position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--serif);font-size:64px;font-weight:900;color:var(--accent);opacity:.22}
+.d-title{font-family:var(--serif);font-weight:900;color:var(--accent);
+  font-size:clamp(30px,9vw,44px);line-height:1.02;letter-spacing:-.02em;margin:0 0 8px}
+.d-author{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.d-note{font-size:14.5px;line-height:1.62;margin:18px 0 0;max-width:44em}
+.d-tracks{margin:34px 0 0;padding:0;list-style:none}
+.d-tracks .player:last-child{border-bottom:1px solid var(--accent-soft)}
+
+/* ── замок ───────────────────────────────────────────────── */
+#gate{position:fixed;inset:0;background:var(--paper);z-index:10;display:grid;place-items:center;padding:24px;
+  transition:opacity .45s ease,visibility .45s ease}
+#gate.hidden{opacity:0;visibility:hidden}
+.gate-inner{width:100%;max-width:340px;text-align:center}
+.wordmark{font-family:var(--serif);font-weight:900;color:var(--accent);
+  font-size:clamp(44px,15vw,64px);letter-spacing:-.03em;line-height:1;margin-bottom:22px}
+.gate-hint{font-size:13.5px;line-height:1.6;color:var(--muted);margin:0 0 22px}
+#gate-form{display:flex;flex-direction:column;gap:10px}
+#code{font-family:var(--sans);font-size:17px;letter-spacing:.28em;text-align:center;padding:14px 12px;
+  border:1px solid var(--accent-soft);border-radius:0;background:transparent;color:var(--ink);width:100%}
+#code:focus{outline:none;border-color:var(--accent)}
+#code::placeholder{letter-spacing:.2em;color:#B9B1A6}
+#gate-form button{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;padding:15px;border:none;border-radius:0;background:var(--accent);
+  color:var(--paper);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.err{min-height:18px;margin:12px 0 0;font-size:12px;color:var(--accent)}
+.shake{animation:shake .32s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}
+  40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+
+#app{opacity:0;transition:opacity .5s ease .1s}
+#app.shown{opacity:1}
+@media (prefers-reduced-motion:reduce){
+  #gate,#app,.detail,.fill,.play{transition:none}.shake{animation:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Ключик, а не защита: код лежит в открытом виде, и это нормально.
+     Ключ общий со страницами голосовых — ввёл один раз, открылось везде. -->
+<div id="gate">
+  <div class="gate-inner">
+    <div class="wordmark">ЛЮБОВЬ</div>
+    <p class="gate-hint">Эта страница — часть журнала.<br>Введите дату свадьбы, чтобы открыть.</p>
+    <form id="gate-form" novalidate>
+      <input id="code" type="text" inputmode="numeric" autocomplete="off"
+             maxlength="8" placeholder="ДДММГГГГ" aria-label="Дата свадьбы">
+      <button type="submit">Открыть</button>
+    </form>
+    <p id="err" class="err" role="status" aria-live="polite"></p>
+  </div>
+</div>
+
+<main id="app" class="wrap" aria-hidden="true">
+  <p class="kicker">Любовь · №1 · Аня и Даня</p>
+  <h1>Альбомы<em>от друзей</em></h1>
+  <div class="rule"></div>
+  <p class="lede">Каждый собрал для вас свой альбом — из треков, ассоциаций и того, что почему-то напоминает о вас. Слушайте по одному, спешить некуда.</p>
+
+  <section class="hero" id="hero" aria-label="Общий трек"></section>
+
+  <div class="section-head">
+    <p class="kicker">Шесть альбомов</p>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    26 августа 2026<br>
+    Отпечатано в одном экземпляре · Нижний Новгород
+  </footer>
+</main>
+
+<div class="detail" id="detail" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="wrap">
+    <button class="back" id="back" type="button">← Все альбомы</button>
+    <div id="detail-body"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     ЗАПОЛНИТЬ ЗДЕСЬ.
+
+     cover  — путь к картинке обложки. Нет файла → в квадрате
+              останется номер альбома, страница не сломается.
+     file   — путь к mp3. Нет файла → плеер напишет
+              «файл ещё не загружен».
+     note   — ассоциация: почему этот трек / этот альбом.
+     ══════════════════════════════════════════════════════════════ */
+
+  var MAIN_TRACK = {
+    title:  'Название общего трека',
+    artist: 'Исполнитель',
+    file:   'tracks/main.mp3',
+    note:   'Тот самый трек, который у нас общий. Пара слов, почему именно он.'
+  };
+
+  var ALBUMS = [
+    {
+      id: 'album-1',
+      title:  'Название альбома',
+      author: 'Имя друга',
+      cover:  'covers/1.jpg',
+      note:   'Пара слов от автора: про что этот альбом и когда его слушать.',
+      tracks: [
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/1-1.mp3', note: 'Ассоциация или строчка воспоминания.' },
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/1-2.mp3', note: '' },
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/1-3.mp3', note: '' }
+      ]
+    },
+    {
+      id: 'album-2',
+      title:  'Название альбома',
+      author: 'Имя друга',
+      cover:  'covers/2.jpg',
+      note:   'Пара слов от автора.',
+      tracks: [
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/2-1.mp3', note: '' },
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/2-2.mp3', note: '' }
+      ]
+    },
+    {
+      id: 'album-3',
+      title:  'Название альбома',
+      author: 'Имя друга',
+      cover:  'covers/3.jpg',
+      note:   'Пара слов от автора.',
+      tracks: [
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/3-1.mp3', note: '' },
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/3-2.mp3', note: '' }
+      ]
+    },
+    {
+      id: 'album-4',
+      title:  'Название альбома',
+      author: 'Имя друга',
+      cover:  'covers/4.jpg',
+      note:   'Пара слов от автора.',
+      tracks: [
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/4-1.mp3', note: '' },
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/4-2.mp3', note: '' }
+      ]
+    },
+    {
+      id: 'album-5',
+      title:  'Название альбома',
+      author: 'Имя друга',
+      cover:  'covers/5.jpg',
+      note:   'Пара слов от автора.',
+      tracks: [
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/5-1.mp3', note: '' },
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/5-2.mp3', note: '' }
+      ]
+    },
+    {
+      id: 'album-6',
+      title:  'Название альбома',
+      author: 'Имя друга',
+      cover:  'covers/6.jpg',
+      note:   'Пара слов от автора.',
+      tracks: [
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/6-1.mp3', note: '' },
+        { title: 'Название трека', artist: 'Исполнитель', file: 'tracks/6-2.mp3', note: '' }
+      ]
+    }
+  ];
+
+  /* ══════════════════════════ дальше править не нужно ═══════════ */
+
+  var PASS = '26082026';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var two = function (n) { return n < 10 ? '0' + n : '' + n; };
+
+  /* ── замок ──────────────────────────────────────────────── */
+  var gate = $('#gate'), app = $('#app'), form = $('#gate-form'),
+      code = $('#code'), err = $('#err');
+
+  function unlock() {
+    gate.classList.add('hidden');
+    app.classList.add('shown');
+    app.setAttribute('aria-hidden', 'false');
+    setTimeout(function () { gate.style.display = 'none'; }, 500);
+  }
+  try { if (localStorage.getItem('lubov-voices') === 'ok') unlock(); } catch (e) {}
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (code.value.replace(/\D/g, '') === PASS) {
+      try { localStorage.setItem('lubov-voices', 'ok'); } catch (e) {}
+      err.textContent = '';
+      unlock();
+    } else {
+      err.textContent = 'Не та дата. Попробуйте ещё раз.';
+      form.classList.remove('shake');
+      void form.offsetWidth;
+      form.classList.add('shake');
+      code.select();
+    }
+  });
+
+  /* ── плеер ──────────────────────────────────────────────── */
+  var allAudio = [];
+
+  function fmt(s) {
+    if (!isFinite(s) || s < 0) return '— · —';
+    return Math.floor(s / 60) + ':' + two(Math.floor(s % 60));
+  }
+
+  function makePlayer(track, index) {
+    var el = document.createElement('li');
+    el.className = 'player';
+    el.innerHTML =
+      '<div class="num">' + (index === null ? '' : two(index)) + '</div>' +
+      '<div class="info">' +
+        '<div class="t-title"></div>' +
+        (track.note ? '<div class="t-note"></div>' : '') +
+        '<div class="bar"><span class="fill"></span></div>' +
+        '<div class="meta"><span class="time">— · —</span></div>' +
+      '</div>' +
+      '<button class="play" type="button"><svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true">' +
+      '<path d="M7 4l13 8-13 8z"/></svg><svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true">' +
+      '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>';
+
+    $('.t-title', el).textContent = track.title || 'Без названия';
+    if (track.note) $('.t-note', el).textContent = track.note;
+    var btn = $('.play', el);
+    btn.setAttribute('aria-label', 'Слушать: ' + (track.title || ''));
+
+    var audio = document.createElement('audio');
+    audio.preload = 'metadata';
+    audio.src = track.file;
+    el.appendChild(audio);
+    allAudio.push(audio);
+
+    var bar = $('.bar', el), fill = $('.fill', el), time = $('.time', el);
+
+    function markMissing() {
+      el.classList.add('missing');
+      el.classList.remove('playing');
+      time.textContent = 'файл ещё не загружен';
+    }
+    audio.addEventListener('error', markMissing);
+    if (audio.error) markMissing();
+
+    audio.addEventListener('loadedmetadata', function () {
+      el.classList.remove('missing');
+      time.textContent = fmt(audio.duration);
+    });
+    audio.addEventListener('timeupdate', function () {
+      if (audio.duration && isFinite(audio.duration)) {
+        fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      }
+      time.textContent = fmt(audio.duration - audio.currentTime);
+    });
+    audio.addEventListener('ended', function () {
+      el.classList.remove('playing');
+      fill.style.width = '0%';
+      time.textContent = fmt(audio.duration);
+    });
+    audio.addEventListener('play', function () {
+      allAudio.forEach(function (a) { if (a !== audio) a.pause(); });
+      el.classList.add('playing');
+    });
+    audio.addEventListener('pause', function () { el.classList.remove('playing'); });
+
+    btn.addEventListener('click', function () {
+      if (audio.paused) audio.play().catch(markMissing); else audio.pause();
+    });
+    bar.addEventListener('click', function (e) {
+      var d = audio.duration;
+      if (!d || !isFinite(d)) return;
+      var r = bar.getBoundingClientRect();
+      audio.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * d;
+    });
+    return el;
+  }
+
+  /* ── обложка с запасным вариантом ───────────────────────── */
+  function cover(src, num, cls) {
+    var box = document.createElement('div');
+    box.className = cls;
+    var ph = document.createElement('div');
+    ph.className = 'ph';
+    ph.textContent = two(num);
+    box.appendChild(ph);
+    if (src) {
+      var img = new Image();
+      img.alt = '';
+      img.onerror = function () { img.remove(); };   // нет файла — остаётся номер
+      img.src = src;
+      box.appendChild(img);
+    }
+    return box;
+  }
+
+  /* ── общий трек ─────────────────────────────────────────── */
+  var hero = $('#hero');
+  hero.innerHTML =
+    '<div class="label">Главный трек</div>' +
+    '<div class="h-title"></div><div class="h-artist"></div>' +
+    '<ul style="margin:0;padding:0;list-style:none"></ul>' +
+    (MAIN_TRACK.note ? '<p class="h-note"></p>' : '');
+  $('.h-title', hero).textContent = MAIN_TRACK.title;
+  $('.h-artist', hero).textContent = MAIN_TRACK.artist;
+  if (MAIN_TRACK.note) $('.h-note', hero).textContent = MAIN_TRACK.note;
+  $('ul', hero).appendChild(makePlayer({ title: MAIN_TRACK.title, file: MAIN_TRACK.file }, null));
+  $('.t-title', hero).style.display = 'none';   // название уже стоит крупно выше
+
+  /* ── сетка ──────────────────────────────────────────────── */
+  var grid = $('#grid');
+  $('#count').textContent = two(ALBUMS.length);
+
+  ALBUMS.forEach(function (al, i) {
+    var card = document.createElement('button');
+    card.className = 'card';
+    card.type = 'button';
+    card.appendChild(cover(al.cover, i + 1, 'cover'));
+    var t = document.createElement('div');
+    t.className = 'c-title'; t.textContent = al.title;
+    var a = document.createElement('div');
+    a.className = 'c-author'; a.textContent = al.author;
+    card.appendChild(t); card.appendChild(a);
+    card.addEventListener('click', function () { open(al, i + 1, true); });
+    grid.appendChild(card);
+  });
+
+  /* ── экран альбома ──────────────────────────────────────── */
+  var detail = $('#detail'), body = $('#detail-body');
+
+  function open(al, num, push) {
+    allAudio.forEach(function (a) { a.pause(); });
+    body.innerHTML = '';
+    body.appendChild(cover(al.cover, num, 'd-cover'));
+
+    var h = document.createElement('h2');
+    h.className = 'd-title'; h.textContent = al.title;
+    var au = document.createElement('div');
+    au.className = 'd-author'; au.textContent = al.author;
+    body.appendChild(h); body.appendChild(au);
+
+    if (al.note) {
+      var n = document.createElement('p');
+      n.className = 'd-note'; n.textContent = al.note;
+      body.appendChild(n);
+    }
+    var ul = document.createElement('ul');
+    ul.className = 'd-tracks';
+    (al.tracks || []).forEach(function (tr, i) { ul.appendChild(makePlayer(tr, i + 1)); });
+    body.appendChild(ul);
+
+    detail.classList.add('open');
+    detail.setAttribute('aria-hidden', 'false');
+    detail.scrollTop = 0;
+    if (push) { try { history.pushState({ a: al.id }, '', '#' + al.id); } catch (e) {} }
+  }
+
+  function close(pop) {
+    allAudio.forEach(function (a) { a.pause(); });
+    detail.classList.remove('open');
+    detail.setAttribute('aria-hidden', 'true');
+    if (!pop) { try { history.back(); } catch (e) {} }
+  }
+
+  $('#back').addEventListener('click', function () { close(false); });
+  window.addEventListener('popstate', function () {
+    var id = location.hash.slice(1);
+    var idx = -1;
+    ALBUMS.forEach(function (a, i) { if (a.id === id) idx = i; });
+    if (idx >= 0) open(ALBUMS[idx], idx + 1, false); else close(true);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && detail.classList.contains('open')) close(false);
+  });
+
+  // прямая ссылка на альбом
+  (function () {
+    var id = location.hash.slice(1);
+    ALBUMS.forEach(function (a, i) { if (a.id === id) open(a, i + 1, false); });
+  })();
+})();
+</script>
+</body>
+</html>
